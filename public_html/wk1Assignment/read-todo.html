@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read-todo</title>
+</head>
+<body>
+    <div>TODO content</div>
+    <script>
+        let div = document.querySelector('div')
+        let htmlStr = ''
+        let myRequest = 'todo'
+        fetch(myRequest)
+        .then(function(response){
+            return response.json()
+        })
+        .then(function(json){
+            for(let index in json){
+                htmlStr += "ID: " +json[index].id + " " +json[index].title + " "+ +json[index].completed +"<br>"
+            }
+            div.innerHTML = htmlStr
+        })
+    </script>
+</body>
+</html>

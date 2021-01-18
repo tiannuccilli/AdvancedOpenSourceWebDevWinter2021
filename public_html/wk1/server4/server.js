@@ -21,7 +21,7 @@ http.createServer(function(request, response){
             //Content type: type/html
             response.writeHead(200,{'Content-Type':'text/html'}) 
             //Send response to body
-            response.write(data.toString())
+            //response.write(data.toString())
         }
             //response complete
     response.end()
