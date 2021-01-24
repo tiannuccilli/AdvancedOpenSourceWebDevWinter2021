@@ -1,0 +1,74 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #FFF;
+  margin: 0px 35px;
+  text-decoration: none;
+  font-size: medium;
+}
+a:hover{
+  color: rgb(255, 161, 46);
+}
+nav{
+  background-color: rgb(8, 8, 155);
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+#content{
+  width: 100%;
+}
+#img-holder{
+  width: 50%;
+  float:right;
+
+}
+img{
+  width: 225px;
+  height:154px;
+  margin: 0 auto;
+  display: block;
+
+}
+#text{
+  float: left;
+  width: 50%;
+  text-align: center;
+
+}
+h1{
+  text-align: center;
+}
+#form-holder{
+  margin: auto;
+  width:fit-content;
+  text-align: center;
+  box-shadow: 0 3px 20px 0px  rgba(0,0,0,.2);
+  border-radius: 2px;
+  padding:40px 20px;
+}
+#sub-holder{
+  margin: auto;
+  width:fit-content;
+  box-shadow: 0 3px 20px 0px  rgba(0,0,0,.2);
+  border-radius: 2px;
+  padding:20px 20px;
+}
+input{
+  margin: 5px 0;
+}
+#wrapper{
+  margin:0 50px;
+}
+#submit{
+  background-color: rgb(255, 161, 46);
+  border-color: rgb(255, 161, 46);
+}
+table{
+margin: 0 auto;  
+}
+textarea{
+  padding: 8.5px;
+}
