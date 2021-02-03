@@ -1,0 +1,28 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+
+<div id="container"> 
+    <form action ="/saveEmployee" method="POST">
+    <table>
+    <tr>
+        <td><label for="firstName">First Name</label></td><td><input type="text" name="firstName" id="firstName"></td>  
+    </tr> 
+    <tr>
+       <td><label for="lastName">Last Name</label></td><td> <input type="text" name="lastName" id="lastName"></td>
+    </tr>
+    <tr>
+        <td><label for="department">Department</label></td>
+        <td><select name="department" id="department">
+            <option value="HR">HR</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Sales">Sales</option>
+        </select></td>
+    </tr>
+    <tr><td><label for="startDate">Start Date</label></td><td><input type="date" name="startDate" id="startDate"></td></tr>
+    <tr><td><label for="jobTitle">Job Title</label></td><td><input type="text" name="jobTitle" id="jobTitle"></td></tr>
+    
+       <tr><td> <label for="salary">Salary</label></td><td><input type="number" name="salary" id="salary"></td></tr>
+        <tr><td></td><td><button id="btnSub" type="submit">Submit</button></td><td></td></tr> 
+        </table>
+    </form>
+</div>

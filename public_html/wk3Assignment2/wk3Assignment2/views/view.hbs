@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+</head>
+<body>
+
+   <h1>Employees</h1>
+   <div id="container">
+       <table id='viewEmployees'>
+        <script>
+            fetch('/getData').then(function(employees){
+                employees.json().then(function(theEmployees){
+                    console.log(theEmployees)
+                    var table = document.getElementById("viewEmployees");
+                    table.innerHTML += "<thead><tr><th>Employee</th><th>Department</th><th>Start Date </th><th>Title</th><th>Salary</th><th>Delete</th><th>Update</th></tr></thead>"
+                    for(let employee of theEmployees.employee){
+                        var row = document.createElement('tr')
+                        var name =document.createElement('td')
+                        name.innerHTML = employee.firstName+" "+ employee.lastName
+                        name.setAttribute("class","emplTD")
+                        row.appendChild(name)
+                        var dep = document.createElement('td')
+                        dep.innerHTML = employee.department
+                        dep.setAttribute("class","emplTD")
+                        row.appendChild(dep)
+                         var startDate = document.createElement('td')
+                        startDate.innerHTML = employee.startDate
+                        startDate.setAttribute("class","emplTD")
+                        row.append(startDate)
+                        var title = document.createElement('td')
+                        title.innerHTML = employee.jobTitle
+                        title.setAttribute("class","emplTD")
+                        row.append(title)
+                        var sal = document.createElement('td')
+                        sal.innerHTML = employee.salary
+                        sal.setAttribute("class","emplTD")
+                        row.appendChild(sal)
+                        
+                        var deleteBtn = document.createElement('button');
+                        deleteBtn.setAttribute("class","btnDel")
+                        deleteBtn.innerText = "Delete"
+                        deleteBtn.addEventListener('click',function deleteEmployee(){
+                            location.replace("/delete")
+                            fetch('/deleteEmployee',{
+                                method:'POST',
+                                headers:{
+                                    'Content-Type':'application/json'
+                                },
+                                body:JSON.stringify({
+                                    _id:employee._id,
+                                    name:employee.firstName +" "+employee.lastName,
+                                    dep: employee.department
+                                })
+                            })                       
+                        }) 
+                        var updateBtn = document.createElement('button');
+                        updateBtn.setAttribute("class","updateBtn")
+                        updateBtn.innerText = "Update"
+                        updateBtn.addEventListener('click',function getOneEmployee(){
+                        location.replace("/update?id="+employee._id)
+                        })
+                        var del = document.createElement('td')
+                        del.setAttribute("class","emplTDMod")
+                        del.appendChild(deleteBtn) 
+                        row.appendChild(del)
+                        var update = document.createElement('td')
+                        update.setAttribute("class","emplTDMod")
+                        update.appendChild(updateBtn) 
+                        row.appendChild(update)
+                        row.setAttribute("class","emplRow")
+                        table.appendChild(row)
+                    }
+                })
+            })
+        </script>
+</div>
+</body>
+</html>
