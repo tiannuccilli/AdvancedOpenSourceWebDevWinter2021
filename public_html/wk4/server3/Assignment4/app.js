@@ -42,6 +42,18 @@ hbs.registerHelper('grid',function(number){
   msg += "</tbody><table>"
   return new hbs.handlebars.SafeString(msg)
 })
+hbs.registerHelper('error404',function(){
+  var num = Math.round(Math.random()*30+20)
+  
+  var classes = ["shrink", "rotate", "still"]
+  var msg =" "
+
+  for( var i=0;i<num;i++){
+    var ranClass = Math.round(Math.random()*2)
+    msg += "<div class='"+classes[ranClass]+"'>404</div>"
+  }
+  return new hbs.handlebars.SafeString(msg)
+})
 
 
 // error handler
