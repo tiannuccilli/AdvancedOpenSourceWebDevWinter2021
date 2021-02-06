@@ -1,2 +1,18 @@
 <h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<p>Choose a number and create a {{title}}</p>
+<form action="/index" method="post">
+    <select name="number" id="number">
+           <script>
+               var select = document.getElementById('number')
+               var nums = [3,4,5,10,20]
+               var str = " "
+               for ( n in nums){
+                   str += "<option value="+nums[n]+">"+nums[n]+"</option>"
+               }
+               select.innerHTML = str
+               console.log(select.value)
+           </script>
+        </select>
+        <input type="submit" id="btn"></input>
+</form>
+{{ grid number}}

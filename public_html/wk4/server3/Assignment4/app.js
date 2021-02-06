@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var hbs = require('hbs')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -26,6 +27,22 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+hbs.registerHelper('grid',function(number){
+  var msg = "<table><tbody>"
+  console.log(number)
+  for( var i=0;i<number;i++){
+      msg += "<tr>"
+      for( var j=0;j<number;j++){
+        var color = ((1<<24)*Math.random()|0).toString(16);
+        msg += "<td style='background-color: #"+color+";'> "+color+"<br><span style='color: #fff'>"+color+"</span></td>"
+      }
+      msg += "</tr>"
+  }
+  msg += "</tbody><table>"
+  return new hbs.handlebars.SafeString(msg)
+})
+
 
 // error handler
 app.use(function(err, req, res, next) {

@@ -6,3 +6,16 @@ body {
 a {
   color: #00B7FF;
 }
+
+table{
+  padding-top: 50px;
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  font-size: x-large;
+}
+#btn{
+  background-color: rgba(255, 209, 59, 0.774);
+  border-color: rgba(255, 210, 64, 0.897);
+}
+
