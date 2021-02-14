@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+</head>
+<body>
+
+   <h1>Employees</h1>
+   <div id="container">
+       <select type="text" id="sortCol">
+           <option value="">None</option>
+           <option value="firstName">First Name</option>
+           <option value="lastName">Last Name</option>
+           <option value="department">Department</option>
+           <option value="startDate">Start Date</option>
+           <option value="jobTitle">Job Title</option>
+           <option value="salary">Salary</option>
+       </select><label>Descending</label><input id="desc" type="radio" value="desc">
+       <button id="sortBTN" onclick="sortTable()" value="Sort">Sort</button><br>
+        <select type="text" id="searchCol">
+           <option value="none">None</option>
+           <option value="firstName">First Name</option>
+           <option value="lastName">Last Name</option>
+           <option value="department">Department</option>
+           <option value="startDate">Start Date</option>
+           <option value="jobTitle">Job Title</option>
+           <option value="salary">Salary</option>
+       </select><input type="text" id="searchVal" placeholder="Search Value">
+       <button id="searchBTN" onclick="searchTable()" value="Search">Search</button>
+       <table id='viewEmployees'>
+
+        <script>
+            function sortTable(){
+                var colInput = document.getElementById('sortCol').value
+                var order = document.getElementById('desc')
+                console.log(order)
+                if (order.checked == true){
+                    colInput = "-"+colInput
+                }
+                url = 'http://localhost:3000/api/v1/employees/' + colInput
+
+                let myHeaders = new Headers()
+                myHeaders.set('Content-Type', 'application/json')
+                let myInit = {
+                method:'GET',
+                headers:myHeaders,
+                mode:'cors',
+                cache:"default"
+                }
+            var myRequest = new Request(url, myInit)
+
+            fetch(myRequest).then(function(employees){
+                employees.json().then(function(theEmployees){
+                    var i = -1
+                    for(let employee of theEmployees){
+                        i ++
+                        var name = document.getElementsByClassName('nameTD')
+                        name[i].innerHTML = employee.firstName+" "+ employee.lastName
+                        var dep = document.getElementsByClassName('depTD')
+                        dep[i].innerHTML = employee.department
+                         var startDate = document.getElementsByClassName('startDateTD')
+                        startDate[i].innerHTML = employee.startDate
+                        var title = document.getElementsByClassName('titleTD')
+                        title[i].innerHTML = employee.jobTitle
+                        var sal = document.getElementsByClassName('salTD')
+                        sal[i].innerHTML = employee.salary
+                        
+                        var del = document.getElementsByClassName('btnDel')
+                    
+                        var delTD = document.getElementsByClassName('delTD')
+                            del[i].addEventListener('click',function deleteEmployee(){
+                            location.replace("/api/v1/delete")
+                            fetch('employees/'+employee._id ,{
+                                method:'DELETE',
+                                headers:{
+                                    'Content-Type':'application/json'
+                                }
+                            })                       
+                        }) 
+                        var up = document.getElementsByClassName('updateBtn')
+                        var upTD = document.getElementsByClassName('upTD')
+                        up[i].addEventListener('click',function getOneEmployee(){
+                        location.replace("/api/v1/update?id="+employee._id)
+                        })
+                    }
+                })
+            })
+            }
+            function searchTable(){
+                var colInput = document.getElementById('searchCol').value
+                var searchVal = document.getElementById('searchVal').value
+                    var trs = document.getElementsByTagName('tr')
+                console.log(trs)
+
+                    for(var j = 0; j<trs.length;j++){
+                        trs[j].style.visibility = "hidden"
+                    }
+                if(colInput=="none"){
+                    'http://localhost:3000/api/v1/employees/'
+                     for(var j = 0; j<trs.length;j++){
+                        trs[j].style.visibility = "visible"
+                    }
+                }
+                url = 'http://localhost:3000/api/v1/employees/'+colInput+'/'+searchVal
+
+                let myHeaders = new Headers()
+                myHeaders.set('Content-Type', 'application/json')
+                let myInit = {
+                method:'GET',
+                headers:myHeaders,
+                mode:'cors',
+                cache:"default"
+                }
+            var myRequest = new Request(url, myInit)
+            fetch(myRequest).then(function(employees){
+               
+                employees.json().then(function(theEmployees){
+                    var i = -1
+                    var name = document.getElementsByClassName('nameTD')
+                    console.log(name)
+                
+                    for(let employee of theEmployees){
+                        trs[i+2].style.visibility = "visible"
+                        console.log(theEmployees)
+                        i ++
+                        var name = document.getElementsByClassName('nameTD')
+                        name[i].innerHTML = employee.firstName+" "+ employee.lastName
+                        var dep = document.getElementsByClassName('depTD')
+                        dep[i].innerHTML = employee.department
+                         var startDate = document.getElementsByClassName('startDateTD')
+                        startDate[i].innerHTML = employee.startDate
+                        var title = document.getElementsByClassName('titleTD')
+                        title[i].innerHTML = employee.jobTitle
+                        var sal = document.getElementsByClassName('salTD')
+                        sal[i].innerHTML = employee.salary
+                        
+                        var del = document.getElementsByClassName('btnDel')
+                    
+                        var delTD = document.getElementsByClassName('delTD')
+                            del[i].addEventListener('click',function deleteEmployee(){
+                            location.replace("/api/v1/delete")
+                            fetch('employees/'+employee._id ,{
+                                method:'DELETE',
+                                headers:{
+                                    'Content-Type':'application/json'
+                                }
+                            })                       
+                        }) 
+                        var up = document.getElementsByClassName('updateBtn')
+                        var upTD = document.getElementsByClassName('upTD')
+                        up[i].addEventListener('click',function getOneEmployee(){
+                        location.replace("/api/v1/update?id="+employee._id)
+                        })
+                    }
+                })
+            })
+           
+
+            }
+           
+            let myHeaders = new Headers()
+            myHeaders.set('Content-Type', 'application/json')
+             let myInit = {
+                method:'GET',
+                headers:myHeaders,
+                mode:'cors',
+                cache:"default"
+            }
+            var url = `http://localhost:3000/api/v1/employees/`
+            var myRequest = new Request(url, myInit)
+
+            fetch(myRequest).then(function(employees){
+                employees.json().then(function(theEmployees){
+                   // console.log(theEmployees)
+                    var table = document.getElementById("viewEmployees");
+                    table.innerHTML += "<thead><tr><th>Employee</th><th>Department</th><th>Start Date </th><th>Title</th><th>Salary</th><th>Delete</th><th>Update</th></tr></thead>"
+                    for(let employee of theEmployees){
+                        var row = document.createElement('tr')
+                        var name =document.createElement('td')
+                        name.innerHTML = employee.firstName+" "+ employee.lastName
+                        name.setAttribute("class","emplTD")
+                        name.setAttribute("class","nameTD")
+                        row.appendChild(name)
+                        var dep = document.createElement('td')
+                        dep.innerHTML = employee.department
+                        dep.setAttribute("class","emplTD")
+                        dep.setAttribute("class","depTD")
+                        row.appendChild(dep)
+                         var startDate = document.createElement('td')
+                        startDate.innerHTML = employee.startDate
+                        startDate.setAttribute("class","emplTD")
+                        startDate.setAttribute("class","startDateTD")
+                        row.append(startDate)
+                        var title = document.createElement('td')
+                        title.innerHTML = employee.jobTitle
+                        title.setAttribute("class","emplTD")
+                        title.setAttribute("class","titleTD")
+                        row.append(title)
+                        var sal = document.createElement('td')
+                        sal.innerHTML = employee.salary
+                        sal.setAttribute("class","emplTD")
+                        sal.setAttribute("class","salTD")
+                        row.appendChild(sal)
+                        
+                        var deleteBtn = document.createElement('button');
+                        deleteBtn.setAttribute("class","btnDel")
+                        deleteBtn.innerText = "Delete"
+                        deleteBtn.addEventListener('click',function deleteEmployee(){
+                            location.replace("/api/v1/delete")
+                            fetch('employees/'+employee._id ,{
+                                method:'DELETE',
+                                headers:{
+                                    'Content-Type':'application/json'
+                                }
+                            })                       
+                        }) 
+                        var updateBtn = document.createElement('button');
+                        updateBtn.setAttribute("class","updateBtn")
+                        updateBtn.innerText = "Update"
+                        updateBtn.addEventListener('click',function getOneEmployee(){
+                        location.replace("/api/v1/update?id="+employee._id)
+                        })
+                        var del = document.createElement('td')
+                        del.setAttribute("class","emplTDMod")
+                        del.setAttribute("class","delTD")
+                        del.appendChild(deleteBtn) 
+                        row.appendChild(del)
+                        var update = document.createElement('td')
+                        update.setAttribute("class","emplTDMod")
+                        update.setAttribute("class","upTD")
+                        update.appendChild(updateBtn) 
+                        row.appendChild(update)
+                        row.setAttribute("class","emplRow")
+                        table.appendChild(row)
+                    }
+                })
+            })
+        </script>
+</div>
+</body>
+</html>
