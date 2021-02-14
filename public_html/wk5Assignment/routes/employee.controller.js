@@ -10,20 +10,6 @@ module.exports.searchTable = function(req,res){
     var colInput = req.params.colInput
     var valInput = req.params.valInput
     console.log(valInput)
-    Employee.find({}).where(colInput, valInput).exec().then(function(results){
-            sendJSONresponse(res,200,results)
-            console.log(results)
-        })
-        .catch(function(err){
-            sendJSONresponse(res,404,err)
-        })
-
-}
-module.exports.searchTable = function(req,res){
-    debug("Searching")
-    var colInput = req.params.colInput
-    var valInput = req.params.valInput
-    console.log(valInput)
     console.log(colInput)
     Employee.find({}).where(colInput, valInput).exec().then(function(results){
             sendJSONresponse(res,200,results)
