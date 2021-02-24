@@ -1,13 +1,23 @@
-var http = require("http")
+const express = require('express')
+const app = express()
+var path = require('path')
 
-http.createServer(function(request, response){
-    //http header
-    //Content type: type/plain
+app.get('/', function(req, res){
+    res.sendFile(path.join(__dirname + '/index.html'))
+})
+app.get('/index', function(req, res){
+    res.sendFile(path.join(__dirname + '/index.html'))
+})
+app.get('/fake-page', function(req, res){
+    res.sendFile(path.join(__dirname + '/index.html'))
+})
+app.get('/todo',function(req, res){
+    res.sendFile(path.join(__dirname + '/todo.json'))
 
-    response.writeHead(200,{'Content-Type':'application/json'}) 
-    //Send response to body
-
-    response.end('Hello World\n')
-}).listen(3000);
-
-console.log('Server running on port 3000');
+})
+app.get('/read-todo',function(req, res){
+    res.sendFile(path.join(__dirname + '/read-todo.html'))
+})
+app.listen(3000, () => {
+    console.log(`listening on port 3000!`)
+  });
